@@ -31,6 +31,7 @@ void print_player_name(void);
 void choose_discards(void);
 void choose_card_to_play(void);
 void run_unit_tests(void);
+int get_cards_initial(int initial[N_CARDS_INITIAL_HAND]);
 
 
 // ADD PROTOTYPES FOR YOUR FUNCTIONS HERE
@@ -69,6 +70,7 @@ void choose_discards() {
 
     // NOTE: THE PROVIDED CODE DOES NOT MAKE A LEGAL MOVE. YOU MUST CHANGE IT TO
     // DISCARD CARDS FROM YOUR HAND.
+    get_cards_initial(initial);
     printf("43 44 45\n");
 
 }
@@ -99,3 +101,11 @@ void run_unit_tests(void) {
 
 
 // ADD YOUR FUNCTIONS HERE
+int get_cards_initial(int initial[N_CARDS_INITIAL_HAND]) {
+    int scannumber = 0;
+    //puts numbers into an array
+    while (scannumber < N_CARDS_INITIAL_HAND) {
+        scanf("%d" , &initial[scannumber++]);
+    }
+    return scannumber;
+}
