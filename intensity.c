@@ -26,12 +26,27 @@
 
 
 // ADD EXTRA #defines HERE
+#define TRUE 1
+#define FALSE 0
+
+//for use in play function
+//defines cards played in the round
+#define MAX_CARDS_PER_ROUND 4
+#define FIRST_PLAY 0
+#define SECOND_PLAY 1
+#define THIRD_PLAY 2
+#define LAST_PLAY 3
+
+
 
 void print_player_name(void);
 void choose_discards(void);
 void choose_card_to_play(void);
 void run_unit_tests(void);
-int scan_new_hand(int new_hand[]);
+int scan_new_hand(int new_hand[], int cards_in_hand);
+void scan_current_plays(int cards_played, int current_plays[]);
+int gets_first_card(int current_plays);
+
 
 
 // ADD PROTOTYPES FOR YOUR FUNCTIONS HERE
@@ -83,8 +98,11 @@ void choose_card_to_play(void) {
 
     scanf("%d %d %d", &cards_in_hand, &cards_played, &table_position);
 
-    int new_hand[cards_in_hand] = {0};
-    scan_new_hand(new_hand);
+    int new_hand[N_CARDS_INITIAL_HAND] = {0};
+    scan_new_hand(new_hand, cards_in_hand);
+
+    int current_plays[N_CARDS_INITIAL_HAND] = {0};
+    scan_current_plays(cards_played, current_plays);
     // ADD CODE TO READ THE CARDS OF YOUR HAND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PREVIOUSLY PLAYED THIS ROUND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PLAYED IN THE HISTORY OF THE GAME INTO AN ARRAY USING SCANF
@@ -95,7 +113,6 @@ void choose_card_to_play(void) {
 
     // NOTE: THE PROVIDED CODE DOES NOT MAKE A LEGAL MOVE. YOU MUST CHANGE IT TO
     // PLAY A CARD FROM YOUR HAND.
-    printf("42\n");
 
 }
 
@@ -109,10 +126,94 @@ void run_unit_tests(void) {
 
 // ADD YOUR FUNCTIONS HERE
 //this function scans the new hand
-int scan_new_hand(int new_hand[]) {
+int scan_new_hand(int new_hand[], int cards_in_hand) {
     int scancount = 0;
     while(scancount < cards_in_hand) {
-        scanf("%d", new_hand[scancount++]);
+        scanf("%d", &new_hand[scancount++]);
     }
     return scancount;
+}
+
+void scan_current_plays(int cards_played, int current_plays[]) {
+    if(cards_played == SECOND_PLAY) {
+        int scan_plays = 0;
+        while(scan_plays < 2) {
+            scanf("%d", &current_plays[scan_plays++]);
+            printf("%d\n", current_plays[scan_plays++]);
+        }
+    }
+    else if(cards_played == THIRD_PLAY) {
+        int scan_plays = 0;
+        while(scan_plays < 3) {
+            scanf("%d", &current_plays[scan_plays++]);
+            printf("%d\n", current_plays[scan_plays++]);
+        }
+    }
+    else if(cards_played == LAST_PLAY) {
+        int scan_plays = 0;
+        while(scan_plays < 4) {
+            scanf("%d", &current_plays[scan_plays++]);
+            printf("%d\n", current_plays[scan_plays++]);
+        }
+    }
+}
+
+int play_non_first_position(int new_hand[], int current_plays, int card_number) {
+    int printed = FALSE;
+    int first_card = gets_first_card(current_plays);
+    if(first_card >= 10 && first_card < 20) {
+        int i = card_number;
+        while(i > 0 && printed == FALSE) {
+            if(new_hand[i] >= 10 && new_hand[i] < 20) {
+                printf("%d", new_hand[i]);
+                printed = TRUE;
+            }
+            i--;
+        }
+    }
+
+    if(first_card >= 20 && first_card < 30) {
+        int i = card_number;
+        while(i > 0 && printed == FALSE) {
+            if(new_hand[i] >= 20 && new_hand[i] < 30) {
+                printf("%d", new_hand[i]);
+                printed = TRUE;
+            }
+            i--;
+        }
+    }
+
+    if(first_card >= 30 && first_card< 40) {
+        int i = 0;
+        while(i < card_number && printed == FALSE) {
+            if(new_hand[i] >= 30 && new_hand[i] < 40) {
+                printf("%d", new_hand[i]);
+                printed = TRUE;
+            }
+            i++;
+        }
+    }
+
+    if(first_card >= 30 && first_card < 40) {
+        int i = card_number;
+        while(i > 0 && printed == FALSE) {
+            if(new_hand[i] >= 30 && new_hand[i] < 40) {
+                printf("%d", new_hand[i]);
+                printed = TRUE;
+            }
+            i--;
+        }
+    }
+   return printed; 
+
+}
+
+int gets_first_card(int current_plays) {
+    int first_card = 0;
+    int i = 0;
+    while(i < 1) {
+        first_card = current_plays[i];
+        i++;
+    }
+    return first_card;
 }
