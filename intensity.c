@@ -70,8 +70,8 @@ void choose_discards() {
 
     // NOTE: THE PROVIDED CODE DOES NOT MAKE A LEGAL MOVE. YOU MUST CHANGE IT TO
     // DISCARD CARDS FROM YOUR HAND.
+    int initial[N_CARDS_INITIAL_HAND] = {0};
     get_cards_initial(initial);
-    printf("43 44 45\n");
 
 }
 
@@ -107,5 +107,6 @@ int get_cards_initial(int initial[N_CARDS_INITIAL_HAND]) {
     while (scannumber < N_CARDS_INITIAL_HAND) {
         scanf("%d" , &initial[scannumber++]);
     }
+    
     return scannumber;
 }
