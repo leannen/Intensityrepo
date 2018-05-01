@@ -31,6 +31,7 @@ void print_player_name(void);
 void choose_discards(void);
 void choose_card_to_play(void);
 void run_unit_tests(void);
+int scan_new_hand(int new_hand[]);
 
 
 // ADD PROTOTYPES FOR YOUR FUNCTIONS HERE
@@ -76,6 +77,14 @@ void choose_discards() {
 void choose_card_to_play(void) {
     // ADD CODE TO READ THE FIRST THREE NUMBERS (NUMBER OF CARDS IN YOUR HAND,
     // NUMBER OF CARDS PLAYED THIS ROUND, TABLE POSITION)
+    int cards_in_hand = 0;
+    int cards_played = 0;
+    int table_position = 0;
+
+    scanf("%d %d %d", &cards_in_hand, &cards_played, &table_position);
+
+    int new_hand[cards_in_hand] = {0};
+    scan_new_hand(new_hand);
     // ADD CODE TO READ THE CARDS OF YOUR HAND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PREVIOUSLY PLAYED THIS ROUND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PLAYED IN THE HISTORY OF THE GAME INTO AN ARRAY USING SCANF
@@ -99,3 +108,11 @@ void run_unit_tests(void) {
 
 
 // ADD YOUR FUNCTIONS HERE
+//this function scans the new hand
+int scan_new_hand(int new_hand[]) {
+    int scancount = 0;
+    while(scancount < cards_in_hand) {
+        scanf("%d", new_hand[scancount++]);
+    }
+    return scancount;
+}
