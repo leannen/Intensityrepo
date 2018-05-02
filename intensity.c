@@ -103,6 +103,8 @@ void choose_card_to_play(void) {
 
     int current_plays[N_CARDS_INITIAL_HAND] = {0};
     scan_current_plays(cards_played, current_plays);
+
+    int received_discards[N_CARDS_DISCARDED] = {0};
     // ADD CODE TO READ THE CARDS OF YOUR HAND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PREVIOUSLY PLAYED THIS ROUND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PLAYED IN THE HISTORY OF THE GAME INTO AN ARRAY USING SCANF
@@ -132,6 +134,13 @@ int scan_new_hand(int new_hand[], int cards_in_hand) {
         scanf("%d", &new_hand[scancount++]);
     }
     return scancount;
+}
+
+int scan_received_discards(int received_discards[]) {
+    int i = 0;
+    while(i < N_CARDS_DISCARDED) {
+        scanf("%d", received_discards[i++]);
+    }
 }
 
 void scan_current_plays(int cards_played, int current_plays[]) {
