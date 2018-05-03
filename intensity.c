@@ -44,9 +44,9 @@ void choose_discards(void);
 void choose_card_to_play(void);
 void run_unit_tests(void);
 int scan_new_hand(int new_hand[], int cards_in_hand);
-void scan_current_plays(int cards_played, int current_plays[]);
-int gets_first_card(int current_plays);
-
+int scan_current_plays(int cards_played, int current_plays[]);
+int gets_first_card(int current_plays[]);
+int play_non_first_position(int new_hand[], int current_plays[], int cards_in_hand);
 
 
 // ADD PROTOTYPES FOR YOUR FUNCTIONS HERE
@@ -95,14 +95,20 @@ void choose_card_to_play(void) {
     int cards_in_hand = 0;
     int cards_played = 0;
     int table_position = 0;
+    int new_hand[N_CARDS_INITIAL_HAND] = {0};
+    int current_plays[N_CARDS_INITIAL_HAND] = {0};
+
 
     scanf("%d %d %d", &cards_in_hand, &cards_played, &table_position);
 
-    int new_hand[N_CARDS_INITIAL_HAND] = {0};
+    
     scan_new_hand(new_hand, cards_in_hand);
-
-    int current_plays[N_CARDS_INITIAL_HAND] = {0};
     scan_current_plays(cards_played, current_plays);
+    play_non_first_position(new_hand, current_plays, cards_in_hand);
+
+
+
+
 
     int received_discards[N_CARDS_DISCARDED] = {0};
     // ADD CODE TO READ THE CARDS OF YOUR HAND INTO AN ARRAY USING SCANF
@@ -139,39 +145,34 @@ int scan_new_hand(int new_hand[], int cards_in_hand) {
 int scan_received_discards(int received_discards[]) {
     int i = 0;
     while(i < N_CARDS_DISCARDED) {
-        scanf("%d", received_discards[i++]);
+        scanf("%d", &received_discards[i++]);
     }
+    return i;
 }
 
-void scan_current_plays(int cards_played, int current_plays[]) {
-    if(cards_played == SECOND_PLAY) {
-        int scan_plays = 0;
-        while(scan_plays < 2) {
-            scanf("%d", &current_plays[scan_plays++]);
-            printf("%d\n", current_plays[scan_plays++]);
-        }
+int scan_current_plays(int cards_played, int current_plays[]) {
+    int i = 0;
+    while(i < cards_played) {
+        scanf("%d", &current_plays[i++]);
     }
-    else if(cards_played == THIRD_PLAY) {
-        int scan_plays = 0;
-        while(scan_plays < 3) {
-            scanf("%d", &current_plays[scan_plays++]);
-            printf("%d\n", current_plays[scan_plays++]);
-        }
-    }
-    else if(cards_played == LAST_PLAY) {
-        int scan_plays = 0;
-        while(scan_plays < 4) {
-            scanf("%d", &current_plays[scan_plays++]);
-            printf("%d\n", current_plays[scan_plays++]);
-        }
-    }
+    return i;
 }
 
-int play_non_first_position(int new_hand[], int current_plays, int card_number) {
+int gets_first_card(int current_plays[]) {
+    int first_card = 0;
+    int i = 0;
+    while(i < 1) {
+        first_card = current_plays[i];
+        i++;
+    }
+    return first_card;
+}
+
+int play_non_first_position(int new_hand[], int current_plays[], int cards_in_hand) {
     int printed = FALSE;
-    int first_card = gets_first_card(current_plays);
-    if(first_card >= 10 && first_card < 20) {
-        int i = card_number;
+    int first_play = gets_first_card(current_plays);
+    if(first_play >= 10 && first_play < 20) {
+        int i = cards_in_hand;
         while(i > 0 && printed == FALSE) {
             if(new_hand[i] >= 10 && new_hand[i] < 20) {
                 printf("%d", new_hand[i]);
@@ -181,8 +182,8 @@ int play_non_first_position(int new_hand[], int current_plays, int card_number) 
         }
     }
 
-    if(first_card >= 20 && first_card < 30) {
-        int i = card_number;
+    if(first_play >= 20 && first_play < 30) {
+        int i = cards_in_hand;
         while(i > 0 && printed == FALSE) {
             if(new_hand[i] >= 20 && new_hand[i] < 30) {
                 printf("%d", new_hand[i]);
@@ -192,9 +193,9 @@ int play_non_first_position(int new_hand[], int current_plays, int card_number) 
         }
     }
 
-    if(first_card >= 30 && first_card< 40) {
+    if(first_play >= 30 && first_play < 40) {
         int i = 0;
-        while(i < card_number && printed == FALSE) {
+        while(i < cards_in_hand && printed == FALSE) {
             if(new_hand[i] >= 30 && new_hand[i] < 40) {
                 printf("%d", new_hand[i]);
                 printed = TRUE;
@@ -203,8 +204,8 @@ int play_non_first_position(int new_hand[], int current_plays, int card_number) 
         }
     }
 
-    if(first_card >= 30 && first_card < 40) {
-        int i = card_number;
+    if(first_play >= 40 && first_play < 50) {
+        int i = cards_in_hand;
         while(i > 0 && printed == FALSE) {
             if(new_hand[i] >= 30 && new_hand[i] < 40) {
                 printf("%d", new_hand[i]);
@@ -217,12 +218,3 @@ int play_non_first_position(int new_hand[], int current_plays, int card_number) 
 
 }
 
-int gets_first_card(int current_plays) {
-    int first_card = 0;
-    int i = 0;
-    while(i < 1) {
-        first_card = current_plays[i];
-        i++;
-    }
-    return first_card;
-}
