@@ -32,6 +32,7 @@ void choose_discards(void);
 void choose_card_to_play(void);
 void run_unit_tests(void);
 int get_cards_initial(int initial[N_CARDS_INITIAL_HAND]);
+int play_discards(int initial[], int discarded[]);
 
 
 // ADD PROTOTYPES FOR YOUR FUNCTIONS HERE
@@ -71,7 +72,9 @@ void choose_discards() {
     // NOTE: THE PROVIDED CODE DOES NOT MAKE A LEGAL MOVE. YOU MUST CHANGE IT TO
     // DISCARD CARDS FROM YOUR HAND.
     int initial[N_CARDS_INITIAL_HAND] = {0};
+    int discarded[N_CARDS_DISCARDED] = {0};
     get_cards_initial(initial);
+    play_discards(initial, discarded);
 
 }
 
@@ -102,11 +105,100 @@ void run_unit_tests(void) {
 
 // ADD YOUR FUNCTIONS HERE
 int get_cards_initial(int initial[N_CARDS_INITIAL_HAND]) {
-    int scannumber = 0;
+    int scan_number = 0;
     //puts numbers into an array
-    while (scannumber < N_CARDS_INITIAL_HAND) {
-        scanf("%d" , &initial[scannumber++]);
+    while (scan_number < N_CARDS_INITIAL_HAND) {
+        scanf("%d" , &initial[scan_number++]);
     }
+    // scan_number = 0;
+    //  while (scan_number < N_CARDS_INITIAL_HAND) {
+    //     printf("%d " , initial[scan_number++]);
+    //     printf("%d", scan_number);
+    // }
     
-    return scannumber;
+    return scan_number;
+}
+
+//figure out which one to print using mod e.g. 49 % 40 = 9 - discard
+//
+int play_discards(int initial[], int discarded[]) {
+    int i = 1;
+    while(i < N_CARDS_INITIAL_HAND) {
+        int k = 0;
+        while(k < N_CARDS_DISCARDED) { 
+            //gets rid of high numbered special cards first
+            if(initial[i] == 47) {
+                discarded[k] = initial[i];
+                initial[i] = -1;    
+            }
+            else if(initial[i] == 39) {
+                discarded[k] = initial[i];
+                initial[i] = -1;     
+            }
+            else if(initial[i] == 38) {
+                discarded[k] = initial[i];
+                initial[i] = -1;      
+            }
+            else if(initial[i] == 37) {
+                discarded[k] = initial[i];
+                initial[i] = -1;      
+            }
+            else if(initial[i] == 36) {
+                discarded[k] = initial[i];
+                initial[i] = -1;      
+            }
+            //Then gets rid of high numbers in other ranges
+            else if(initial[i] == 49) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }
+            else if(initial[i] == 29) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }   
+            else if(initial[i] == 19) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }
+            else if(initial[i] == 48) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }
+            else if(initial[i] == 28) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }   
+            else if(initial[i] == 18) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }
+            else if(initial[i] == 27) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }   
+            else if(initial[i] == 17) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }
+            else if(initial[i] == 46) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }
+            else if(initial[i] == 26) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }   
+            else if(initial[i] == 16) {
+                discarded[k] = initial[i];
+                initial[i] = -1; 
+            }
+            k++;
+       }
+        i++;
+    }
+    int k = 0;
+    while(k < N_CARDS_DISCARDED) {
+         printf("%d ", discarded[k++]);
+    }
+    return i;
 }
