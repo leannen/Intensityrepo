@@ -47,6 +47,8 @@ int scan_new_hand(int new_hand[], int cards_in_hand);
 int scan_current_plays(int cards_played, int current_plays[]);
 int gets_first_card(int current_plays[]);
 int play_non_first_position(int new_hand[], int current_plays[], int cards_in_hand);
+int find_largest_card(int new_hand[], int cards_in_hand);
+void first_position_play(int cards_played, int new_hand[], int cards_in_hand);
 
 
 // ADD PROTOTYPES FOR YOUR FUNCTIONS HERE
@@ -104,13 +106,11 @@ void choose_card_to_play(void) {
     
     scan_new_hand(new_hand, cards_in_hand);
     scan_current_plays(cards_played, current_plays);
+    //find_largest_card(new_hand, cards_in_hand);
+    first_position_play(table_position, new_hand, cards_in_hand);
     play_non_first_position(new_hand, current_plays, cards_in_hand);
 
-
-
-
-
-    int received_discards[N_CARDS_DISCARDED] = {0};
+    
     // ADD CODE TO READ THE CARDS OF YOUR HAND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PREVIOUSLY PLAYED THIS ROUND INTO AN ARRAY USING SCANF
     // ADD CODE TO READ THE CARDS PLAYED IN THE HISTORY OF THE GAME INTO AN ARRAY USING SCANF
@@ -171,11 +171,16 @@ int gets_first_card(int current_plays[]) {
 int play_non_first_position(int new_hand[], int current_plays[], int cards_in_hand) {
     int printed = FALSE;
     int first_play = gets_first_card(current_plays);
+    int largest_card = find_largest_card(new_hand, cards_in_hand);
     if(first_play >= 10 && first_play < 20) {
         int i = cards_in_hand;
         while(i > 0 && printed == FALSE) {
             if(new_hand[i] >= 10 && new_hand[i] < 20) {
                 printf("%d", new_hand[i]);
+                printed = TRUE;
+            }
+            else {
+                printf("%d ", largest_card);
                 printed = TRUE;
             }
             i--;
@@ -189,6 +194,10 @@ int play_non_first_position(int new_hand[], int current_plays[], int cards_in_ha
                 printf("%d", new_hand[i]);
                 printed = TRUE;
             }
+            else {
+                printf("%d ", largest_card);
+                printed = TRUE;
+            }
             i--;
         }
     }
@@ -198,6 +207,10 @@ int play_non_first_position(int new_hand[], int current_plays[], int cards_in_ha
         while(i < cards_in_hand && printed == FALSE) {
             if(new_hand[i] >= 30 && new_hand[i] < 40) {
                 printf("%d", new_hand[i]);
+                printed = TRUE;
+            }
+            else {
+                printf("%d ", largest_card);
                 printed = TRUE;
             }
             i++;
@@ -211,10 +224,33 @@ int play_non_first_position(int new_hand[], int current_plays[], int cards_in_ha
                 printf("%d", new_hand[i]);
                 printed = TRUE;
             }
+            else {
+                printf("%d ", largest_card);
+                printed = TRUE;
+            }
             i--;
         }
     }
    return printed; 
+
+}
+int find_largest_card(int new_hand[], int cards_in_hand) {
+    int i = 1;
+    int largest_card = new_hand[0];
+    while(i < cards_in_hand) {
+        if(largest_card < new_hand[i]) {
+            largest_card = new_hand[i];
+            i++;
+        }
+    }
+    return largest_card;
+}
+
+void first_position_play(int cards_played, int new_hand[], int cards_in_hand) {
+    int largest_card = find_largest_card(new_hand, cards_in_hand);
+    if(cards_played == 0) {
+       printf("%d ", largest_card);
+    }
 
 }
 
